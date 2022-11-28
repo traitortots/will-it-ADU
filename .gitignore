@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#ArcGIS
+.aprx
+.atbx
+.gdb
+Will_It_ADU/
