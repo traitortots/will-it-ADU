@@ -46,6 +46,7 @@ function load_layers() {
     // Results
     // blkgrp_exp
 
+    // demographics
     map.addSource('income_variables', {
         type: 'vector',
         'url':'mapbox://caleb-thomas-smith.6u0vx6vk'
@@ -72,6 +73,43 @@ function load_layers() {
                 89179,
                 "#F58949",
                 107207,
+                "#FFBD2B",
+                135951,
+                "#F1FA22",
+                169732,
+              ]
+        },
+        'layout': {
+            'visibility': 'none',
+        }
+    });
+
+    map.addSource('poverty_variables', {
+        type: 'vector',
+        'url':'mapbox://caleb-thomas-smith.8k3v0exw'
+    });
+
+    map.addLayer({
+        'id':'householdPovertyRate',
+        'type':'fill',
+        'source':'poverty_variables',
+        'source-layer': 'percent_poverty_ACS-dw0kqd',
+        'paint': {
+            [
+                "step",
+                ["get", "Percent of Population whose income in the past 12 months is below poverty level"],
+                "#0D0887",
+                5,
+                "#5402A4",
+                10,
+                "#8C0AA6",
+                15,
+                "#BA338A",
+                20,
+                "#DC5C68",
+                25,
+                "#F58949",
+                30,
                 "#FFBD2B",
                 135951,
                 "#F1FA22",
