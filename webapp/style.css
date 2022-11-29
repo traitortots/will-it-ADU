@@ -1,0 +1,345 @@
+/* Website Styling */
+
+
+
+/* Map Styling */
+body { margin: 0; padding: 0; }
+
+#map { position: absolute; top: 40px; bottom: 0; width: 100%; }
+
+/* Style for Toggle Menu */
+#menu {
+    background: #fff;
+    /* position: absolute; */
+    z-index: 1;
+    top: 120px;
+    right: 250px;
+    border-radius: 5px;
+    width: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+#menu a {
+    font-size: 0px;
+    color: #404040;
+    display: block;
+    margin: 0;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    text-align: right;
+}
+
+#menu a:last-child {
+    border: none;
+}
+
+#menu a:hover {
+    background-color: #f8f8f8;
+    color: #404040;
+}
+
+#menu a.active {
+    border-radius: 10px;
+    background-color: #3887be;
+    /* color: #3887be; */
+}
+
+#menu a.active:hover {
+    background: #3074a4;
+}
+
+.toggle_text {
+    margin-top: 18px;
+    /* margin-left: 50px; */
+    line-height: 22px;
+    text-align: left;
+}
+
+/* Style for Hover Bar */
+h2 {
+    margin: 10px;
+    font-size: 13px;
+    color: #404040;
+}
+
+h3 {
+margin: 10px;
+font-size: 18px;
+}
+
+h3 {
+font-size: 16px;
+}
+
+p {
+font-size: 12px;
+margin: 10px;
+}
+
+/**
+* Set rules for how the map overlays
+* (information box and legend) will be displayed
+* on the page. */
+.map-overlay {
+    background:rgba(255, 255, 255, 0.6);
+    position: absolute;
+    z-index: 0;
+    top: 60px;
+    border-radius: 10px;
+    width: 200px;
+    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+#features {
+height: 100px;
+width: 120px;
+margin-bottom: 40px;
+margin-right: 130px;
+}
+
+#legend {
+padding: 10px;
+box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+line-height: 18px;
+height: 130px;
+margin-bottom: 40px;
+width: 110px;
+}
+
+.legend-key {
+display: inline-block;
+border-radius: 20%;
+width: 10px;
+height: 10px;
+margin-right: 5px;
+}
+
+
+/** Rules for text overlay on map **/
+.map-text {
+    width: 100%;
+}
+
+.map-text-rectangle {
+    background: #FFFFFF;
+    text-align: center;
+    /* border-radius: 10px;
+    height: 400px;
+    width: 300px;
+    box-sizing: border-box;
+    padding: 40px; */
+}
+
+
+#info {
+    /* position: absolute; */
+    opacity: 1;
+    top: 10%;
+    left: 45%;
+    /* top: 60px; */
+    /* right: 30px; */
+    /* height: 510px; */
+}
+
+#spacer {
+    width: 100px;
+}
+
+.story-text {
+    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: justify;
+    /* padding: 20px; */
+}
+.about-text{
+    padding-left: 30px;
+    padding-right: 200px;
+    padding-top: 100px;
+}
+
+.legend-overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.8);
+    margin-right: 20px;
+    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 11px;
+    overflow: auto;
+    border-radius: 3px;
+}
+
+/** Rules for histogram overlay on map **/
+#histogram_legend {
+    padding: 6px 9px 6px 9px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    line-height: 13px;
+    margin-bottom: 20px;
+}
+
+.hlegend-key {
+    display: inline-block;
+    border-radius: 20%;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+}
+
+.hlegend span {
+    display: block;
+    float: left;
+    height: 15px;
+    width: 20%;
+    padding: 2px;
+    text-align: center;
+    font-size: 9px;
+    color: #808080;
+    margin-top: 3px;
+}
+.hlegend span {
+    width: 100%;
+    background: linear-gradient(
+    to left,
+    #fcfdbf,
+    #fc8961,
+    #b73779,
+    #51127c,
+    #000004
+);
+}
+histogram-legend {
+    width: 185px;
+    height: 92px;
+    background-color: rgba(255, 255, 255);
+    border: 1.5px solid white;
+    position: absolute;
+    user-select: none;
+    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    line-height: 1.15;
+    font-size: 12.5px;
+    padding: 4px;
+}
+histogram-legend.hide {
+    display: none;
+}
+
+body {
+    overflow: hidden;
+}
+histogram-legend table {
+    width: 100%;
+}
+histogram-legend td,
+histogram-legend th {
+    width: 20%;
+    border: none;
+    text-align: center;
+    vertical-align: baseline;
+    padding: 0px;
+}
+histogram-legend tr:nth-child(2) td {
+    font-size: 10.5px;
+}
+histogram-legend th {
+    font-size: 14.5px;
+    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+histogram-legend td {
+    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+histogram-legend th:first-child {
+    font-size: 24px;
+    width: 30%;
+    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    color: white;
+    text-shadow: -0.5px -0.5px white,
+        -0.5px 0.5px white,
+        0.5px -0.5px white,
+        0.5px 0.5px white;
+}
+histogram-legend tr:nth-child(3) td,
+histogram-legend tr:nth-child(4) td {
+    padding-top: 3px;
+    font-size: 10.5px;
+}
+histogram-legend td b {
+    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+histogram-legend td i {
+    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+histogram-legend img {
+    height: 12px;
+    padding: 0 1px;
+}
+
+div.hlegend {
+    width: 212px;
+    text-align: center;
+}
+
+/* Story */
+
+#storymode-controls {
+position: absolute;
+bottom: 10px;
+left: 50%;
+transform: translateX(-50%);
+}
+
+#storymode-controls-numbers {
+display: inline-block;
+text-align: center;
+width: 60px;
+}
+
+#story-back {
+visibility: hidden;
+}
+
+i {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+
+/* Scroll legend */
+
+.ui.modal>.content>.scroll {
+flex: 1;
+}
+.scroll.ui.segment {
+max-height: 200px;
+overflow-y: auto;
+}
+
+#story_box {
+    opacity: 0.9;
+}
