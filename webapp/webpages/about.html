@@ -12,8 +12,15 @@
         <!-- Website Script -->
         <script src="../javascript/webmain.js" defer></script>
 
-        <!-- Fomantic UI -->
-        <link rel="stylesheet" type="text/css" href="../website_fomantic/semantic/dist/semantic.min.css">
+        <!-- You MUST include jQuery before Fomantic -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
+
+        <!-- Data Tables -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+        <link rel="stylesheet" type="text/css" href="datatables.css">
     </head>
 
     <!-- Map Page -->
@@ -22,9 +29,9 @@
         <div class ="ui inverted menu" id="navmenu">
             <div class="ui container">
                 <a class="item">ADU Opportunities</a>
-                <a class="item">Map</a>
+                <a class="item" href="/webapp">Map</a>
                 <a class="active item" href="webpages/about.html">About</a>
-                <a class="item" href="webpages/methodology.html">Methodology</a>
+                <a class="item" href="methodology.html">Methodology</a>
             </div>
         </div>
 

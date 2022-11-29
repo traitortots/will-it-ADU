@@ -16,6 +16,11 @@
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
         <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
+
+        <!-- Data Tables -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+        <link rel="stylesheet" type="text/css" href="datatables.css">
     </head>
 
     <body>
@@ -23,27 +28,20 @@
         <div class ="ui inverted menu" id="navmenu">
             <div class="ui container">
                 <a class="item">ADU Opportunities</a>
-                <a class="item">Map</a>
-                <a class="item" href="webpages/about.html">About</a>
+                <a class="item" href="/webapp">Map</a>
+                <a class="item" href="about.html">About</a>
                 <a class="active item" href="webpages/methodology.html">Methodology</a>
             </div>
         </div>
 
         <!-- Content Placeholders -->
         <div class ="ui main text about-text container about-text">
-          <h1 class="ui large header">About</h1>
-          <p class='story-text'>A New Picture of Segregation is part of an ongoing research project headed by Wenfei Xu.</p>
-          <p class='story-text'>The aim of this research is to develop a better understanding of how new types of spatiotemporal data may help us gain a better understanding of how human mobility data can improve our understanding of segregation and neighborhood change. </p>
-          <p class='story-text'>This website was created by <a href="" target ="_blank">Allie Chu </a> and Wenfei Xu.</p>
-          <br>
-          <p class='story-text'>To get in touch, please email <a href="mailto:wenfei@uchicago.edu">wenfei@uchicago.edu</a></p>
-
+          <h1 class="ui large header">Methodology</h1>
+          <p class="story-text"><span>To conduct this project, data from several open data sources was used. Cadastral data will be sourced from each municipality: in Ithaca, this will come from </span><span ><a href="https://data-ithacany.opendata.arcgis.com/datasets/IthacaNY::tax-parcels/about&amp;sa=D&amp;source=editors&amp;ust=1669744274432861&amp;usg=AOvVaw343XXbwxV5zcvkg5O4QB8j">Ithaca Open Data</a></span><span>, while in New Haven parcel data will be sourced from the </span><span ><a href="https://portal.ct.gov/OPM/IGPP/ORG/GIS2/Parcel-Data/Parcel-Data&amp;sa=D&amp;source=editors&amp;ust=1669744274433154&amp;usg=AOvVaw1pyb7QnXqm8v1zo1SkJnAp">State of Connecticut&rsquo;s Office of Policy and Management - Municipal Parcel Data</a></span><span>. Generalized building footprints will be sourced from the popular </span><span ><a href="https://github.com/microsoft/USBuildingFootprints&amp;sa=D&amp;source=editors&amp;ust=1669744274433394&amp;usg=AOvVaw03l-27Qaq6IlB5NS7ENq1-">Microsoft Building Footprints</a></span><span>&nbsp;dataset, and zoning data for each municipality&rsquo;s approaches to ADU regulation will be sourced from the </span><span ><a href="https://www.zoningatlas.org/&amp;sa=D&amp;source=editors&amp;ust=1669744274433714&amp;usg=AOvVaw2lZllzi2346sjWXWkY75t2">National Zoning Atlas</a></span><span>. Demographic data will be sourced from the U.S. Census Bureau, and housing data will be sourced from the U.S. Department of Housing and Urban Development. </span></p>
+          <p class="story-text"><span>In order to create the maps and descriptive statistics for this project, the data sets mentioned above will be analyzed using Python, specifically the GeoPandas and Shapely libraries, in a Jupyter Notebook environment. To find tax parcels suitable for the development of ADUs, each municipalities tax parcels will be read into a GeoPandas dataframe, clipped with building footprints, and analyzed using topological set-theoretic relationships and affine transformations to determine whether the remaining space in a tax parcel is sufficient to allow for the construction of an ADU. A full outline of the analysis strategy can be found in the project&rsquo;s </span><span ><a href="https://github.com/traitortots/will-it-ADU&amp;sa=D&amp;source=editors&amp;ust=1669744274434200&amp;usg=AOvVaw1Qlh_ChyUij5VxvKVpoLGu">GitHub repository</a></span><span>. </span></p>
+          <p class="story-text"><span>After this initial physical analysis is complete, a variety of other limiting factors and important pieces of context will be analyzed. These include a variety of legal barriers in the form of zoning regulations (owner-occupancy requirements, minimum lot size requirements, detached ADU bans, etc), financial barriers, awareness, and interest/willingness from potential host properties. </span></p><p class="story-text"><span>Once the analysis is complete, the results will be shown using Mapbox and/or Leaflet. </span><span>The final product of the project will be an interactive website displaying the results of this analysis in an engaging narrative that incorporates diverse perspectives from above and below about the importance of ADUs as a strategy for alleviating the housing crisis, with maps showing: the number of ADUs that could be built physically in each municipality; the number of ADUs that could be built legally in each municipality; a variety of demographic data on each municipality; potentially the current number of ADUs in each city; and the environmental, economic, and community benefits that an increased number of ADUs in each city might have. We will also incorporate qualitative information, photographs, and other types of media to help capture the wide range of viewpoints and important considerations in this debate. </span></p>
+          <p class="story-text"><span>We believe that this project will reveal an untapped potential for neighborhood densification through the targeted development of accessory dwelling units in Ithaca, New York, and New Haven, Connecticut, which would show that ADUs are a viable way to address the housing crisis in these two cities while remaining sensitive to neighborhood context and alleviating common complains about the production of new housing in communities. This project will also show the various layers of feasibility faced by those who would like to build ADUs on their properties and/or communities.</span></p>
           </div>
-          <!-- <p>This is the placeholder page for information about this project</p> -->
-          <!-- <img class="wireframe" src="../assets/images/wireframe/media-paragraph.png"> -->
-          <!-- <img class="wireframe" src="../assets/images/wireframe/paragraph.png">
-          <img class="wireframe" src="../assets/images/wireframe/paragraph.png">
-          <img class="wireframe" src="../assets/images/wireframe/paragraph.png"> -->
         </div>
 
         <!-- Footer -->
