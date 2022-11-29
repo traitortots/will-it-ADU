@@ -45,35 +45,41 @@ const g_11 = gent_10
 function load_layers() {
     // Results
     // blkgrp_exp
+
+    map.addSource('income_variables', {
+        type: 'vector',
+        'url':'mapbox://caleb-thomas-smith.6u0vx6vk'
+    });
+
     map.addLayer({
-        id:'blkgrp_exp_results_1',
-        type:'fill',
-        source:{
-            'type':'vector',
-            'url':'mapbox://iamwfx.results1_0'
-        },
-        'source-layer': 'data',
+        'id':'household_median_income',
+        'type':'fill',
+        'source':'income_variables',
+        'source-layer': 'household_income_ACS-a65qvq',
         'paint': {
             'fill-color': [
                 "step",
-                ["get", "blkgrp_exp"],
-                "#fcfdbf",
-                0.14,
-                "#fe9f6d",
-                0.27,
-                "#de4968",
-                0.41,
-                "#8c2981",
-                0.54,
-                "#3b0f70",
-                0.68,
-                "#000004"
+                ["get", "Median Household Income in past 12 months (inflation-adjusted dollars to last year of 5-year range)"],
+                "#0D0887",
+                36309,
+                "#5402A4",
+                51114,
+                "#8C0AA6",
+                63074,
+                "#BA338A",
+                76897,
+                "#DC5C68",
+                89179,
+                "#F58949",
+                107207,
+                "#FFBD2B",
+                135951,
+                "#F1FA22",
+                169732,
               ]
         },
-        'layout': {
-            'visibility': 'none',
-        }
-    })
+    });
+
     map.addLayer({
         id:'blkgrp_exp_results_2',
         type:'fill',

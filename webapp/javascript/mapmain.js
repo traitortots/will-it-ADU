@@ -1,10 +1,12 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoiaWFtd2Z4IiwiYSI6ImNqNGFnMnIyMzEwZzgycXJ1ODdqbG14eGMifQ.3AqBqXZlcbsbEhxddAPB-g';
+mapboxgl.accessToken = 'pk.eyJ1IjoiY2FsZWItdGhvbWFzLXNtaXRoIiwiYSI6ImNsNXY2aTVvODAxcHgzY204Y3VtaXdvbDgifQ.ymP724CF_-YRwPfKRN7_GA';
 
 const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/ajchu28/cl2rubekr000214pswya10cpr',
-    zoom: 11,
-    center: [-87.623177, 41.881832]
+    style: 'mapbox://styles/caleb-thomas-smith/clb244lbq000114pbspzkxpja',
+    center: [-76.49970, 42.44122],
+    zoom: 12.45,
+    pitch: 46.50,
+    bearing: -16.80
 });
 
 var active_layer = "blk_group";

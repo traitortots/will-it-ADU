@@ -10,8 +10,8 @@
         <link rel="stylesheet" type="text/css" href="style.css">
 
         <!-- Mapbox -->
-        <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
-        <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js" defer></script>
+        <script src='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js' defer></script>
+        <link href='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css' rel='stylesheet' />
 
         <!-- Fomantic UI -->
         <link rel="stylesheet" type="text/css" href="website_fomantic/semantic/dist/semantic.css">
@@ -19,6 +19,11 @@
 
         <!-- JQuery -->
         <script src="javascript/jquery.js"></script>
+
+        <!-- You MUST include jQuery before Fomantic -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
 
         <!-- Data Tables -->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
@@ -30,6 +35,7 @@
 
         <!-- Accordion -->
         <script src="website_fomantic/semantic/src/definitions/modules/accordion.js"></script>
+
     </head>
 
     <body>
@@ -37,12 +43,31 @@
         <!-- Navigation Menu -->
         <div class ="ui fluid inverted menu" id="navmenu">
             <div class="ui container">
-                <h1 class="item">ADU Opportunities</h1>
+                <a class="item">ADU Opportunities</a>
                 <a class="active item">Map</a>
                 <!-- <a class="item" href="webpages/data.html">Data</a> -->
                 <a class="item" href="webpages/about.html">About</a>
             </div>
         </div>
+        
+        <!-- Welcome Modal -->
+        <div class="ui modal" id="welcomeModal">
+            <i class="close icon"></i>
+            <div class="header">
+              Welcome to: ADU Opportunities - How accessory dwelling units can create economic opportunity and address the housing crisis in American college towns
+            </div>
+            <div class="image content">
+              <div class="image">
+              </div>
+              <div class="description">
+                A project by Caleb Smith and Lancelot Comrie for CRP 5850: Mapping and Countermapping at Cornell University in Fall 2022. (more description...)
+              </div>
+            </div>
+            <div class="actions">
+              <div class="ui button">Cancel</div>
+              <div class="ui button">OK</div>
+            </div>
+          </div>
 
         <!-- Map -->
         <div class="container" id="mapcontainer">
@@ -57,14 +82,15 @@
 
             <div class="four wide column">
               <div class="ui segment" id="story_pane">
-                    <div class="ui large header" id="story-header">A New Picture of Segregation</div>
+                    <div class="ui large header" id="story-header">Neighborhood Context (Ithaca)</div>
                     <div id="story-text">
-                        How do we understand racial segregation? 
+                        In Ithaca, 73% of households are renters due to the large student community as a result of Cornell University and Ithaca College being situated in the city. Additionally, there is a low supply of housing in the city which has made existing properties very expensive and almost unreachable to the average family.The city is predominately white but with significant populations of African Americans in the West Hill neighborhoods of the city. In these neighborhoods, many residents are experiencing poverty and sharp structural racism at the hands of incompetent landlords. 
+                        Ithaca population - 31,710 (2011)
                     </div>
                     <br> <br>
                     <div class="noselect" id="storymode-controls">
                         <i class="arrow left" id="story-back" style="visibility: hidden;"></i>
-                        <span id="storymode-controls-numbers">1 of 3</span>
+                        <span id="storymode-controls-numbers">1 of 12</span>
                         <i class="arrow right" id="story-forward" style="visibility: visible;"></i>
                     </div>
                 </div>
@@ -80,8 +106,8 @@
                             <div class="grouped fields">
                             <div class="field">
                                 <div class="ui radio checkbox">
-                                    <input type="radio" id="blk_group" name="radio_toggle" checked="checked">
-                                    <label>Residential Exposure</label>
+                                    <input type="radio" id="household_median_income" name="radio_toggle" checked="checked">
+                                    <label>household_median_income</label>
                                 </div>
                             </div>
                             <div class="field">
