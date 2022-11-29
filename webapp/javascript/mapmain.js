@@ -9,7 +9,7 @@ const map = new mapboxgl.Map({
     bearing: -16.80
 });
 
-var active_layer = "blk_group";
+var active_layer = "household_median_income";
 
 // Adjusts the borders of the active layer when it is clicked
 function adjust_active_layer(clickedLayer, property_types) {
@@ -85,11 +85,10 @@ function make_invisible(group) {
 map.on('load', () => {
     load_layers();
 
-    const blk_group = ['blkgrp_exp_results_1','blkgrp_exp_results_2','blkgrp_exp_results_3'];
+    const median_income = ['household_median_income'];
     array = []
 
-    make_visible(blk_group, array)
-
+    make_visible(median_income, array)
 
     // Load layers of data
     map.setLayoutProperty('bge_data', 'visibility', 'none');

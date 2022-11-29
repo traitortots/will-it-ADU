@@ -57,27 +57,11 @@ function load_layers() {
         'source':'income_variables',
         'source-layer': 'household_income_ACS-a65qvq',
         'paint': {
-            'fill-color': [
-                "step",
-                ["get", "Median Household Income in past 12 months (inflation-adjusted dollars to last year of 5-year range)"],
-                "#0D0887",
-                36309,
-                "#5402A4",
-                51114,
-                "#8C0AA6",
-                63074,
-                "#BA338A",
-                76897,
-                "#DC5C68",
-                89179,
-                "#F58949",
-                107207,
-                "#FFBD2B",
-                135951,
-                "#F1FA22",
-                169732,
-              ]
+            'fill-color': 'red',
         },
+        'layout': {
+            'visibility': 'none',
+        }
     });
 
     map.addLayer({
