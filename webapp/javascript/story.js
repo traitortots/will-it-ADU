@@ -34,10 +34,10 @@ var stories = [
       description: "The city of Ithaca is comprised of three types of zoning districts:  ‘Primarily Residential’, ‘Non-Residential’ and ‘Mixed with Residential’. If we take into account the fact that’ non-residential’ zoning districts do not allow ADU’s, our total number of possible ADU’s decreases to 4594.    ",
       layer: "ce_data",
       flyTo: {
-        zoom: 19.41,
-        pitch:53.26,
-        center: [-87.72640, 41.90855],
-        bearing: 25.99
+        center: [-76.49502, 42.44116],
+        zoom: 12.43,
+        pitch: 0.00,
+        bearing: 0.00
       },
     },
     { title: "Where are ADU’s allowed?",
