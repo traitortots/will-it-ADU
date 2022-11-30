@@ -85,10 +85,10 @@ function make_invisible(group) {
 map.on('load', () => {
     load_layers();
 
-    const median_income = ['household_median_income'];
+    const initialLayers = [''];
     array = []
 
-    make_visible(median_income, array)
+    make_visible(initialLayers, array)
 
     // Load layers of data
     map.setLayoutProperty('householdPovertyRate', 'visibility', 'none');
