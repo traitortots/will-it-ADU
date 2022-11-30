@@ -36,17 +36,7 @@
         <!-- Accordion -->
         <script src="website_fomantic/semantic/src/definitions/modules/accordion.js"></script>
        
-        <!-- Sources -->
-        <script src="javascript/sources.js"></script>
 
-        <!-- Map Script -->
-        <script src="javascript/mapmain.js" defer></script>
-
-        <!-- Website Script -->
-        <script src="javascript/webmain.js" defer></script>
-
-        <!-- Story -->
-        <script src="javascript/story.js"></script>
     </head>
 
     <body>
@@ -82,9 +72,9 @@
           </div>
 
         <!-- Welcome Modal Script -->
-        <!-- <script>$('.ui.modal')
+        <script>$('.ui.modal')
             .modal('show')
-          ;</script> -->
+          ;</script>
 
         <!-- Map -->
         <div class="container" id="mapcontainer">
@@ -118,48 +108,17 @@
                     <div class="ui large header">Info</div>
 
                     <!-- Information Box -->
-                    <div class="info_box">
-                        <div class="ui form">
-                            <div class="grouped fields">
-                            <div class="field">
-                                <div class="ui radio checkbox">
-                                    <input type="radio" id="household_median_income" name="radio_toggle" checked="checked">
-                                    <label>household_median_income</label>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="ui radio checkbox">
-                                    <input type="radio" id="householdPovertyRate" name="radio_toggle">
-                                    <label>householdPovertyRate</label>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="ui radio checkbox">
-                                    <input type="radio" id="household_median_income" name="radio_toggle">
-                                    <label>household_median_income</label>
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <div class="ui checkbox">
-                                    <input type="checkbox" id="householdPovertyRate" name="checkbox">
-                                    <label>householdPovertyRate</label>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="ui checkbox">
-                                    <input type="checkbox" id="household_median_income" name="checkbox">
-                                    <label>household_median_income</label>
-                                </div>
-                            </div>
-                            <div class="field">
+                    <div class="info_box ui vertical menu" id="layersList">
+                        <!-- <div class="ui vertical menu" id="layersList">
+                             <div class="ui vertical menu" id="layersList"> -->
+                            <!-- <div class="field">
                                 <div class="ui checkbox">
                                     <input type="checkbox" id="..." name="checkbox">
                                     <label>...</label>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            </div> -->
+                        <!-- </div> -->
+                    </div> 
 
                     <div class="legend_box">
                         <div class="scroll ui fitted segment">
@@ -204,6 +163,16 @@
     </body>
 
     <footer>
+        <!-- Sources -->
+        <script src="javascript/sources.js"></script>
 
+        <!-- Map Script -->
+        <script src="javascript/mapmain.js" defer></script>
+
+        <!-- Website Script -->
+        <script src="javascript/webmain.js" defer></script>
+
+        <!-- Story -->
+        <script src="javascript/story.js"></script>
     </footer>
 </html>

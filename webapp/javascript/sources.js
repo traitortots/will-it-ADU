@@ -5,7 +5,7 @@ function load_layers() {
         type: 'vector',
         'url':'mapbox://caleb-thomas-smith.6u0vx6vk'
     });
-    console.log("income_variables source added");
+    //console.log("income_variables source added");
 
     map.addLayer({
         'id':'household_median_income',
@@ -33,15 +33,18 @@ function load_layers() {
                 169732,
                 "#ffffff",
               ]
+        },
+        'layout': {
+            'visibility': 'none',
         }
     });
-    console.log("household_median_income layer added");
+    //console.log("household_median_income layer added");
 
     map.addSource('poverty_variables', {
         type: 'vector',
         'url':'mapbox://caleb-thomas-smith.8k3v0exw'
     });
-    console.log("poverty_variables source added");
+    //console.log("poverty_variables source added");
 
     map.addLayer({
         'id':'householdPovertyRate',
@@ -73,13 +76,13 @@ function load_layers() {
             'visibility': 'none',
         }
     });
-    console.log("householdPovertyRate layer added");
+    //console.log("householdPovertyRate layer added");
 
     map.addSource('ithacaZoning', {
         type: 'vector',
         'url':'mapbox://caleb-thomas-smith.3kf86hj7'
     });
-    console.log("ithacaZoning source added");
+    //console.log("ithacaZoning source added");
 
     map.addLayer({
         'id':'ithacaZoning',
@@ -93,13 +96,13 @@ function load_layers() {
             'visibility': 'none',
         }
     });
-    console.log("ithacaZoning layer added");
+    //console.log("ithacaZoning layer added");
 
     map.addSource('newHavenZoning', {
         type: 'vector',
         'url':'mapbox://caleb-thomas-smith.80cd5hgo'
     });
-    console.log("newHavenZoning source added");
+    //console.log("newHavenZoning source added");
 
     map.addLayer({
         'id':'newHavenZoning',
@@ -113,13 +116,13 @@ function load_layers() {
             'visibility': 'none',
         }
     });
-    console.log("newHavenZoning layer added");
+    //console.log("newHavenZoning layer added");
 
     map.addSource('newHavenParcels', {
         type: 'vector',
         'url':'mapbox://caleb-thomas-smith.6ha5dykl'
     });
-    console.log("newHavenParcels source added");
+    //console.log("newHavenParcels source added");
 
     map.addLayer({
         'id':'newHavenParcels',
@@ -133,13 +136,13 @@ function load_layers() {
             'visibility': 'none',
         }
     });
-    console.log("newHavenParcels layer added");
+    //console.log("newHavenParcels layer added");
 
     map.addSource('ithacaParcels', {
         type: 'vector',
         'url':'mapbox://caleb-thomas-smith.6bjts4hy'
     });
-    console.log("ithacaParcels source added");
+    //console.log("ithacaParcels source added");
 
     map.addLayer({
         'id':'ithacaParcels',
@@ -153,8 +156,8 @@ function load_layers() {
             'visibility': 'none',
         }
     });
-    console.log("ithacaParcels layer added");
+    //console.log("ithacaParcels layer added");
 
 
-console.log("All Layers Loaded");
+//console.log("All Layers Loaded");
 }

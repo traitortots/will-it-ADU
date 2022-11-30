@@ -103,29 +103,70 @@ map.on('load', () => {
 // // After the last frame rendered before the map enters an "idle" state.
 map.on('idle', () => {
     // Enumerate ids of the layers.
-    const blk_group = ['blkgrp_exp_results_1','blkgrp_exp_results_2','blkgrp_exp_results_3'];
-    const wei_group = ['wei_results_1', 'wei_results_2', 'wei_results_3'];
-    const ce_group = ['cell_exp_results_1','cell_exp_results_2','cell_exp_results_3'];
-    // const results_layers = [].concat(blk_group, wei_group, ce_group);
-    const land_use = ['landuse_1', 'landuse_2', 'landuse_3', 'landuse_5', 'landuse_6', 'landuse_7', 'landuse_8', 'landuse_9', 'landuse_10', 'landuse_11', 'landuse_12', 'landuse_13', 'landuse_14', 'landuse_15']
-    const gentrification = ['gentrification_0', 'gentrification_1', 'gentrification_2']
+    const toggleableLayerIDs = ['household_median_income','householdPovertyRate', 'ithacaZoning', 'newHavenZoning', 'newHavenParcels', 'ithacaParcels'];
+    
+    // // const results_layers = [].concat(blk_group, wei_group, ce_group);
+    // const results_layers = [].concat(household_median_income, householdPovertyRate);
 
-    const property_types = {
-        'wei_data': 'weighted_interaction_exposure',
-        'ce_data': 'cell_exp',
-        'bge_data': 'blkgrp_exp',
-        'comm_area': 'id',
-    };
+    // const property_types = {
+    //     'wei_data': 'weighted_interaction_exposure',
+    //     'ce_data': 'cell_exp',
+    //     'bge_data': 'blkgrp_exp',
+    //     'comm_area': 'id',
+    // };
 
-    const layer_mapping = {
-        'household_median_income': household_median_income,
-        'householdPovertyRate': householdPovertyRate,
-        // 'blk_group': blk_group,
-        // 'landuse': land_use,
-        // 'gentrification': gentrification
-    };
+    // const layer_mapping = {
+    //     'household_median_income': household_median_income,
+    //     'householdPovertyRate': householdPovertyRate,
+    //     // 'blk_group': blk_group,
+    //     // 'landuse': land_use,
+    //     // 'gentrification': gentrification
+    // };
 
-    const results_layers = [].concat(household_median_income, householdPovertyRate);
+    // Set up the corresponding toggle button for each layer.
+    for (const id of toggleableLayerIDs) {
+
+        // skip layers that arlready have a button
+        if (document.getElementById(id)) {
+            console.log("skipping " + id);
+            continue;
+        }
+
+        // Create a link.
+        const link = document.createElement('a');
+        link.id = id;
+        link.href = '#';
+        link.textContent = id;
+        link.className += ' item';
+
+        // Show or hide layer when the toggle is clicked.
+        link.onclick = function (e) {
+            const clickedLayer = this.textContent;
+            e.preventDefault();
+            e.stopPropagation();
+
+            const visibility = map.getLayoutProperty(
+                clickedLayer,
+                'visibility'
+            );
+
+            // toggle layer visibility by changing the layout object's visibility property
+            if (visibility === 'visible') {
+                map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                this.className += 'item';
+            } else {
+                this.className = 'item active';
+                map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+            }
+        };
+
+            const layers = document.getElementById('layersList');
+            layers.appendChild(link);
+            console.log("added link: " + link);
+        }
+    });
+
+
 
     // // If these layers were not added to the map, abort
     // if (!layers_exist(blk_group) || !layers_exist(wei_group) || !layers_exist(ce_group)) {
@@ -134,54 +175,54 @@ map.on('idle', () => {
     // }
 
 
-    $(document).ready(function(){
-        $('.ui.accordion').accordion()
+    // $(document).ready(function(){
+    //     $('.ui.accordion').accordion()
 
-        $('.toggle').click(function(){
-            $('.ui.accordion').accordion('toggle', 0);
-        });
+    //     $('.toggle').click(function(){
+    //         $('.ui.accordion').accordion('toggle', 0);
+    //     });
 
-        $('input[type="radio"]').click(function(){
-            if($(this).is(":checked")){
-                let name = this.getAttribute("id");
-                console.log("attribute ID is " + name)
-                let group = layer_mapping[name];
-                console.log("layer returned is " + group)
-                console.log("assigning in radio buttons")
-                active_layer = name;
-                make_visible(group, results_layers);
-                // adjust_active_layer(this, property_types);
-            }
-        });
+    //     $('input[type="radio"]').click(function(){
+    //         if($(this).is(":checked")){
+    //             let name = this.getAttribute("id");
+    //             console.log("attribute ID is " + name)
+    //             let group = layer_mapping[name];
+    //             console.log("layer returned is " + group)
+    //             console.log("assigning in radio buttons")
+    //             active_layer = name;
+    //             make_visible(group, results_layers);
+    //             adjust_active_layer(this, property_types);
+    //         }
+    //     });
 
-        $('input[type="checkbox"]').click(function(){
-            let name = this.getAttribute("id");
-            let group = layer_mapping[name];
-            let none = []
+    //     $('input[type="checkbox"]').click(function(){
+    //         let name = this.getAttribute("id");
+    //         let group = layer_mapping[name];
+    //         let none = []
 
-            if($(this).is(":checked")){
-                if(name == "commdist") {
-                    map.setLayoutProperty(
-                        'comm_area',
-                        'visibility',
-                        'visible'
-                    );
-                } else {
-                    make_visible(group, none);
-                }
-            } else if($(this).is(":not(:checked)")){
-                if(name == "commdist") {
-                    map.setLayoutProperty(
-                        'comm_area',
-                        'visibility',
-                        'none'
-                    );
-                } else {
-                    make_invisible(group);
-                }
-            }
-        });
-    });
+    //         if($(this).is(":checked")){
+    //             if(name == "commdist") {
+    //                 map.setLayoutProperty(
+    //                     'comm_area',
+    //                     'visibility',
+    //                     'visible'
+    //                 );
+    //             } else {
+    //                 make_visible(group, none);
+    //             }
+    //         } else if($(this).is(":not(:checked)")){
+    //             if(name == "commdist") {
+    //                 map.setLayoutProperty(
+    //                     'comm_area',
+    //                     'visibility',
+    //                     'none'
+    //                 );
+    //             } else {
+    //                 make_invisible(group);
+    //             }
+    //         }
+    //     });
+    // });
 
     // map.on('mousemove', (event) => {
     //     if (active_layer == 'blk_group') {
@@ -240,6 +281,3 @@ map.on('idle', () => {
     //             : `<p>Hover over an area!</p>`;
     //         }
     //     }
-    // });
-
-});
