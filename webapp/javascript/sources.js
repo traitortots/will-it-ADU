@@ -100,6 +100,7 @@ function load_layers() {
                 "Prohibited", 'red',
                 'Public Hearing', 'yellow', 'white'
             ],
+            'fill-opacity': 0.5,
         },
         'layout': {
             'visibility': 'none',
@@ -107,6 +108,27 @@ function load_layers() {
     });
     //console.log("ithacaZoning layer added");
 
+    map.addLayer({
+        'id':'ithacaHousing',
+        'type':'fill',
+        'source':'ithacaZoning',
+        'source-layer': 'ithacazoningdistricts_adu_dat-9vwyge',
+        'paint': {
+            'fill-color': [
+                'match',
+                ['get', 'Type of Zoning District'],
+                'Mixed with Residential', 'DarkSeaGreen',
+                "Nonresidential", 'crimson',
+                'Primarily Residential', 'aqua', 'white'
+            ],
+            'fill-opacity': 0.5,
+        },
+        'layout': {
+            'visibility': 'none',
+        }
+    });
+
+    
     map.addSource('newHavenZoning', {
         type: 'vector',
         'url':'mapbox://caleb-thomas-smith.80cd5hgo'
@@ -119,13 +141,61 @@ function load_layers() {
         'source':'newHavenZoning',
         'source-layer': 'newhaven_zoningdistricts_adu_-1fqab9',
         'paint': {
-            'fill-color': 'red',
+            'fill-color': [
+                'match',
+                ['get', 'Accessory_Dwelling_Unit__ADU_'],
+                'Overlay', 'white',
+                "Prohibited", 'crimson',
+                'Allowed/Conditional', 'aqua', 'white'
+            ],
+            'fill-opacity': 0.5,
         },
         'layout': {
             'visibility': 'none',
         }
     });
+
+    map.addLayer({
+        'id':'newHavenAttached',
+        'type':'fill',
+        'source':'newHavenZoning',
+        'source-layer': 'newhaven_zoningdistricts_adu_-1fqab9',
+        'paint': {
+            'fill-color': [
+                'match',
+                ['get', 'ADU_Restricted_to_Only_Primary_Structure__i_e___No_Outbuildings'],
+                'Yes', 'goldenrod',
+                "No", 'lightgrey',
+                'white'
+            ],
+            'fill-opacity': 0.5,
+        },
+        'layout': {
+            'visibility': 'none',
+        }
+    });
+
     //console.log("newHavenZoning layer added");
+   
+    map.addLayer({
+        'id':'newHavenHousing',
+        'type':'fill',
+        'source':'newHavenZoning',
+        'source-layer': 'newhaven_zoningdistricts_adu_-1fqab9',
+        'paint': {
+            'fill-color': [
+                'match',
+                ['get', 'Type of Zoning District'],
+                'Mixed with Residential', 'DarkSeaGreen',
+                "Nonresidential", 'crimson',
+                'Primarily Residential', 'aqua', 'white'
+            ],
+            'fill-opacity': 0.5,
+        },
+        'layout': {
+            'visibility': 'none',
+        }
+    });
 
     map.addSource('newHavenParcels', {
         type: 'vector',
@@ -139,7 +209,14 @@ function load_layers() {
         'source':'newHavenParcels',
         'source-layer': 'newhaven_final_parcels_v2_eps-2mejr1',
         'paint': {
-            'fill-color': 'red',
+            'fill-color': [
+                'match',
+                ['get', 'will_it_adu'],
+                'Y', 'lightblue',
+                "N", 'indianred',
+                'white'
+            ],
+            'fill-opacity': 0.5,
         },
         'layout': {
             'visibility': 'none',
@@ -159,7 +236,14 @@ function load_layers() {
         'source':'ithacaParcels',
         'source-layer': 'ithaca_final_parcels_v2_epsg4-abexn9',
         'paint': {
-            'fill-color': 'red',
+            'fill-color': [
+                'match',
+                ['get', 'will_it_adu'],
+                'Y', 'lightblue',
+                "N", 'indianred',
+                'white'
+            ],
+            'fill-opacity': 0.5,
         },
         'layout': {
             'visibility': 'visible',

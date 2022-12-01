@@ -82,6 +82,7 @@ function make_invisible(storyLayer) {
     }
 }
 
+// legend creator options
 function singleColorLegend(activeLayer) {
 
 }
@@ -95,7 +96,9 @@ function matchColorLegend(activeLayer) {
 }
 
 function legendCreator(activeLayers) {
-
+// if regex ... do ...
+// elif regex ... do...
+// else ... do ...
 }
 
 // Wait until the map has finished loading.
@@ -122,33 +125,33 @@ map.on('load', () => {
 });
 
 
-map.on('styledata', () => { // create legend - SINGLE COLOR
-    // destroy all existing layer entries
-    const legendBox = document.getElementById('activeContent');
-    legendBox.textContent = '';
+// map.on('styledata', () => { // create legend - SINGLE COLOR
+//     // destroy all existing layer entries
+//     const legendBox = document.getElementById('activeContent');
+//     legendBox.textContent = '';
     
-    // create the legend 
-    const activeLayers = map.getStyle().layers.filter((d) => d.layout?.visibility === "visible");
+//     // create the legend 
+//     const activeLayers = map.getStyle().layers.filter((d) => d.layout?.visibility === "visible");
 
-    activeLayers.forEach((activeLayer) => {
-        const color = activeLayer.paint['fill-color'];
-        const legendItem = document.createElement("div");
-        const key = document.createElement("span");
-        key.className = "legend-key flex";
-        legendItem.className = "ui segment";
-        key.style.backgroundColor = color;
+//     activeLayers.forEach((activeLayer) => {
+//         const color = activeLayer.paint['fill-color'];
+//         const legendItem = document.createElement("div");
+//         const key = document.createElement("span");
+//         key.className = "legend-key flex";
+//         legendItem.className = "ui segment";
+//         key.style.backgroundColor = color;
 
-        const activeContent = document.getElementById('activeContent');
+//         const activeContent = document.getElementById('activeContent');
 
-        const label = document.createElement("span");
-        label.innerHTML = `${activeLayer.id}`;
-        label.className = "legend";
-        legendItem.appendChild(key);
-        legendItem.appendChild(label);
-        activeContent.appendChild(legendItem);
-        console.log("legend created for " + activeLayer.id);
-    });
-})
+//         const label = document.createElement("span");
+//         label.innerHTML = `${activeLayer.id}`;
+//         label.className = "legend";
+//         legendItem.appendChild(key);
+//         legendItem.appendChild(label);
+//         activeContent.appendChild(legendItem);
+//         console.log("legend created for " + activeLayer.id);
+//     });
+// })
 
 map.on('styledata', () => { // create legend - MULTIPLE COLORS
     // destroy all existing layer entries
@@ -157,22 +160,17 @@ map.on('styledata', () => { // create legend - MULTIPLE COLORS
 
     // create the legend
     const activeLayers = map.getStyle().layers.filter((d) => d.layout?.visibility === "visible");
+    console.log("activeLayers is", activeLayers);
 
     activeLayers.forEach((activeLayer) => {
         const fillColorObj = activeLayer['paint']['fill-color'];
-        console.log(fillColorObj);
-        const colorsList = fillColorObj.slice(2).slice(0,-1);
-        console.log(colorsList);
+        const colorsList = fillColorObj.slice(2,-1);
 
         const legendItem = document.createElement("div");
 
-        colorsList.forEach(() => {
-            hexCode = colorsList.shift();
-            console.log(hexCode);
-            labelValue = colorsList.shift().toLocaleString(undefined, {maximumFractionDigits: 0});
-            console.log(labelValue);
-            console.log(colorsList);
-
+        // colorsList.forEach((color) => {
+        for (let i = 0; i < colorsList.length; i = i + 2) {
+            const [hexCode,labelValue] = colorsList.slice(i, i + 2);
             const legendSubItem = document.createElement("div");
             const key = document.createElement("span");
             key.className = "legend-key flex";
@@ -182,20 +180,20 @@ map.on('styledata', () => { // create legend - MULTIPLE COLORS
             const activeContent = document.getElementById('activeContent');
 
             const label = document.createElement("span");
-            label.innerHTML = "< " + labelValue;
+            label.innerHTML = "< " + labelValue.toLocaleString(undefined, {maximumFractionDigits: 0});
             label.className = "legend";
             legendSubItem.appendChild(key);
             legendSubItem.appendChild(label);
             activeContent.appendChild(legendSubItem);
 
-        });
+        };
     });
 });
 
 // // After the last frame rendered before the map enters an "idle" state.
 map.on('idle', () => {
     // Enumerate ids of the layers.
-    const toggleableLayerIDs = ['household_median_income','householdPovertyRate', 'ithacaZoning', 'newHavenZoning', 'newHavenParcels', 'ithacaParcels'];
+    const toggleableLayerIDs = ['household_median_income','householdPovertyRate', 'ithacaZoning', 'newHavenZoning', 'newHavenParcels', 'ithacaParcels', 'ithacaHousing', 'newHavenHousing', 'newHavenAttached'];
     
     // Set up the corresponding toggle button for each layer.
     for (const id of toggleableLayerIDs) {
