@@ -7,9 +7,16 @@ var storyHeader = d3.select("#story-header");
 var storyContent = d3.select("#story-text");
 
 var stories = [
-
-    // layers: ['wei_data', 'ce_data', 'bge_data', 'comm_area', 'landuse', 'gentrification'];
-
+    {
+      title: "Welcome!",
+      description: "Welcome text",
+      flyTo: {
+        center: [-76.49502, 42.44116],
+        zoom: 12.43,
+        pitch: 0.00,
+        bearing: 0.00
+      },
+    },
     { title: "Neighborhood Context (Ithaca)",
       description: "In Ithaca, 73% of households are renters due to the large student community as a result of Cornell University and Ithaca College being situated in the city. Additionally, there is a low supply of housing in the city which has made existing properties very expensive and almost unreachable to the average family.The city is predominately white but with significant populations of African Americans in the West Hill neighborhoods of the city. In these neighborhoods, many residents are experiencing poverty and sharp structural racism at the hands of incompetent landlords. Ithaca population - 31,710 (2011)",
       layer: "household_median_income",
@@ -21,8 +28,8 @@ var stories = [
       },
     },
     { title: "ADU Regulations",
-      description: "Accessory Dwelling Units (ADUs). They can be defined as additional living quarters built inside the lots of single-family homes but house separate occupants from that of the primary dwelling unit. They can be attached or detached from the main residence and are often equipped with kitchen or bathroom facilities. Building more ADU’s can help tackle the housing crisis because they increase housing supply in a manner that is far more cost-effective than building a new single-family home in a single lot. They also build neighborhood wealth for everyday working-class Americans.      Ignoring any regulations, approximately 4827 new ADU’s can be build in Ithaca",
-      layer: "ce_data",
+      description: "Accessory Dwelling Units (ADUs). They can be defined as additional living quarters built inside the lots of single-family homes but house separate occupants from that of the primary dwelling unit. They can be attached or detached from the main residence and are often equipped with kitchen or bathroom facilities. Building more ADU’s can help tackle the housing crisis because they increase housing supply in a manner that is far more cost-effective than building a new single-family home in a single lot. They also build neighborhood wealth for everyday working-class Americans. Ignoring any regulations, approximately 4,827 new ADU’s can be build in Ithaca",
+      layer: "ithacaZoning",
       flyTo: {
         center: [-76.49502, 42.44116],
         zoom: 12.43,
@@ -32,7 +39,7 @@ var stories = [
     },
     { title: "Where is housing allowed in Ithaca?",
       description: "The city of Ithaca is comprised of three types of zoning districts:  ‘Primarily Residential’, ‘Non-Residential’ and ‘Mixed with Residential’. If we take into account the fact that’ non-residential’ zoning districts do not allow ADU’s, our total number of possible ADU’s decreases to 4594.    ",
-      layer: "ce_data",
+      layer: "ithacaZoning",
       flyTo: {
         center: [-76.49502, 42.44116],
         zoom: 12.43,
@@ -136,18 +143,31 @@ var stories = [
 
 // Update Story.
 function updateStory(storyObj) {
+    // turn off any active layers
+    const allLayerIDs = ['household_median_income','householdPovertyRate', 'ithacaZoning', 'newHavenZoning', 'newHavenParcels', 'ithacaParcels'];
+    for (const id of allLayerIDs) {
+      const visibility = map.getLayoutProperty(id, 'visibility');
+
+      if (visibility === 'visible') {
+        map.setLayoutProperty(id, 'visibility', 'none');
+      }
+      else {
+        continue;
+      }
+    }
 
     // Story vars.
     var title = storyObj['title'];
     var description = storyObj['description'];
     var cameraSettings = storyObj['flyTo'];
-    // var layer = storyObj['layer'];
+    var layer = storyObj['layer'];
 
     // Update the Storymode content.
     storyHeader.text(title);
     storyContent.text(description);
     map.flyTo(cameraSettings);
-    // call to update to active layer
+    make_visible(layer);
+    console.log("updateStory called for " + title);
 };
 
 // Callbacks

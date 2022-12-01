@@ -7,6 +7,8 @@ function load_layers() {
     });
     //console.log("income_variables source added");
 
+    // var household_median_income_steps = ["#0D0887", 36309, "#5402A4", 51114, "#8C0AA6", 63074,"#BA338A", 76897, "#DC5C68", 89179, "#F58949", 107207, "#FFBD2B", 135951, "#F1FA22", 169732, "#ffffff",]
+
     map.addLayer({
         'id':'household_median_income',
         'type':'fill',
@@ -32,8 +34,9 @@ function load_layers() {
                 "#F1FA22",
                 169732,
                 "#ffffff",
-              ]
-        },
+              ],
+            'fill-opacity': 0.5
+            },
         'layout': {
             'visibility': 'none',
         }
@@ -90,7 +93,13 @@ function load_layers() {
         'source':'ithacaZoning',
         'source-layer': 'ithacazoningdistricts_adu_dat-9vwyge',
         'paint': {
-            'fill-color': 'red',
+            'fill-color': [
+                'match',
+                ['get', 'Accessory Dwelling Unit (ADU) Treatment'],
+                'Overlay', 'white',
+                "Prohibited", 'red',
+                'Public Hearing', 'yellow', 'white'
+            ],
         },
         'layout': {
             'visibility': 'none',
@@ -153,10 +162,10 @@ function load_layers() {
             'fill-color': 'red',
         },
         'layout': {
-            'visibility': 'none',
+            'visibility': 'visible',
         }
     });
-    //console.log("ithacaParcels layer added");
+    // console.log("ithacaParcels layer added");
 
 
 //console.log("All Layers Loaded");

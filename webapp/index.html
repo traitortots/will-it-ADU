@@ -17,9 +17,6 @@
         <link rel="stylesheet" type="text/css" href="website_fomantic/semantic/dist/semantic.css">
         <!-- <link rel="stylesheet" type="text/css" href="website_fomantic/semantic/dist/semantic.min.css"> -->
 
-        <!-- JQuery -->
-        <!-- <script src="javascript/jquery.js"></script> -->
-
         <!-- You MUST include jQuery before Fomantic -->
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
@@ -31,12 +28,7 @@
         <link rel="stylesheet" type="text/css" href="datatables.css">
 
         <!-- D3 -->
-        <script src="javascript/d3.min.js"></script>
-
-        <!-- Accordion -->
-        <script src="website_fomantic/semantic/src/definitions/modules/accordion.js"></script>
-       
-
+        <script src="https://d3js.org/d3.v7.min.js"></script>
     </head>
 
     <body>
@@ -72,9 +64,9 @@
           </div>
 
         <!-- Welcome Modal Script -->
-        <script>$('.ui.modal')
+        <!-- <script>$('.ui.modal')
             .modal('show')
-          ;</script>
+          ;</script> -->
 
         <!-- Map -->
         <div class="container" id="mapcontainer">
@@ -89,10 +81,9 @@
 
             <div class="four wide column">
               <div class="ui segment" id="story_pane">
-                    <div class="ui large header" id="story-header">Neighborhood Context (Ithaca)</div>
+                    <div class="ui large header" id="story-header">Welcome!</div>
                     <div id="story-text">
-                        In Ithaca, 73% of households are renters due to the large student community as a result of Cornell University and Ithaca College being situated in the city. Additionally, there is a low supply of housing in the city which has made existing properties very expensive and almost unreachable to the average family.The city is predominately white but with significant populations of African Americans in the West Hill neighborhoods of the city. In these neighborhoods, many residents are experiencing poverty and sharp structural racism at the hands of incompetent landlords. 
-                        Ithaca population - 31,710 (2011)
+                        Welcome to the project! Click the arrow below to get started.
                     </div>
                     <br> <br>
                     <div class="noselect" id="storymode-controls">
@@ -105,58 +96,26 @@
 
             <div class="four wide column" id="info">
                 <div class="ui segment">
-                    <div class="ui large header">Info</div>
+                    <div class="ui large header">Layers</div>
 
                     <!-- Information Box -->
-                    <div class="info_box ui vertical menu" id="layersList">
-                        <!-- <div class="ui vertical menu" id="layersList">
-                             <div class="ui vertical menu" id="layersList"> -->
-                            <!-- <div class="field">
-                                <div class="ui checkbox">
-                                    <input type="checkbox" id="..." name="checkbox">
-                                    <label>...</label>
-                                </div>
-                            </div> -->
-                        <!-- </div> -->
+                    <div class="info_box ui vertical menu fluid" id="layersList">
                     </div> 
-
+                    <div class="ui large header">Legend</div>
                     <div class="legend_box">
                         <div class="scroll ui fitted segment">
-                            <div class="ui styled fluid accordion" id="accordion">
-                                <div class="active title">
-                                    <i class="dropdown icon" style="border-width:0px"></i>
-                                    Legend
-                                </div>
-                                <div class="active content">
-                                    <!-- <img class="ui large image" src="assets/images/legend/Exposure.png"> -->
-                                    coming soon...
-                                </div>
-
-                                <div class="title">
-                                    <i class="dropdown icon" style="border-width:0px"></i>
-                                    ... Legend
-                                </div>
-                                <div class="content">
-                                    <!-- <img class="ui large image" src="assets/images/legend/landuse.png"> -->
-                                </div>
-
-                                <div class="title">
-                                    <i class="dropdown icon" style="border-width:0px"></i>
-                                    ... Legend
-                                </div>
-                                <div class="content">
-                                    <!-- <img class="ui large image" src="assets/images/legend/gentrification.png"> -->
-                                </div>
-                            </div>
+                            
+                            <div class="ui segments" id="activeContent">
+                           </div>
                         </div>
                     </div>
 
-                    <div class="ui segment">
+                    <!-- <div class="ui segment">
                         <h4>Median Income Data</h4>
                         <div id='hover'>
                             <p>Hover over an area! (coming soon)</p>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
