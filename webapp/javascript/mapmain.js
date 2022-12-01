@@ -1,5 +1,6 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FsZWItdGhvbWFzLXNtaXRoIiwiYSI6ImNsNXY2aTVvODAxcHgzY204Y3VtaXdvbDgifQ.ymP724CF_-YRwPfKRN7_GA';
 
+
 const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/caleb-thomas-smith/clb244lbq000114pbspzkxpja',
@@ -38,12 +39,12 @@ function layers_exist(layer_list) {
 }
 
 // given a group, makes that group visible and the others invisible
-function make_visible(group, result_layers) {
-
+function make_visible(storyLayer) {
+    console.log("make_visible called for " + storyLayer);
     to_remove = []
 
-    for (let i = 0; i < result_layers.length; i++) {
-        let layer = result_layers[i];
+    for (let i = 0; i < storyLayer.length; i++) {
+        let layer = storyLayer;
         let visibility = map.getLayoutProperty(
             layer,
             'visibility'
@@ -55,8 +56,8 @@ function make_visible(group, result_layers) {
     }
     make_invisible(to_remove);
 
-    for (let i = 0; i < group.length; i++) {
-        let layer = group[i];
+    for (let i = 0; i < storyLayer.length; i++) {
+        let layer = storyLayer;
 
         map.setLayoutProperty(
             layer,
@@ -71,24 +72,40 @@ function make_visible(group, result_layers) {
 }
 
 // // given a group, makes that group invisible
-function make_invisible(group) {
-    for (let i = 0; i < group.length; i++) {
+function make_invisible(storyLayer) {
+    for (let i = 0; i < storyLayer.length; i++) {
         map.setLayoutProperty(
-            group[i],
+            storyLayer[i],
             'visibility',
             'none'
         );
     }
 }
 
+function singleColorLegend(activeLayer) {
+
+}
+
+function stepColorLegend(activeLayer) {
+
+}
+
+function matchColorLegend(activeLayer) {
+
+}
+
+function legendCreator(activeLayers) {
+
+}
+
 // Wait until the map has finished loading.
 map.on('load', () => {
     load_layers();
 
-    const initialLayers = [''];
-    array = []
+    // const initialLayers = ['household_median_income'];
+    // array = []
 
-    make_visible(initialLayers, array)
+    // make_visible(initialLayers)
 
     // Load layers of data
     map.setLayoutProperty('householdPovertyRate', 'visibility', 'none');
@@ -98,6 +115,81 @@ map.on('load', () => {
     map.setLayoutProperty('ithacaParcels', 'visibility', 'none');
 
     map.getCanvas().style.cursor = 'default';
+
+    // Add zoom and rotation controls to the map.
+    map.addControl(new mapboxgl.NavigationControl());
+    
+});
+
+
+map.on('styledata', () => { // create legend - SINGLE COLOR
+    // destroy all existing layer entries
+    const legendBox = document.getElementById('activeContent');
+    legendBox.textContent = '';
+    
+    // create the legend 
+    const activeLayers = map.getStyle().layers.filter((d) => d.layout?.visibility === "visible");
+
+    activeLayers.forEach((activeLayer) => {
+        const color = activeLayer.paint['fill-color'];
+        const legendItem = document.createElement("div");
+        const key = document.createElement("span");
+        key.className = "legend-key flex";
+        legendItem.className = "ui segment";
+        key.style.backgroundColor = color;
+
+        const activeContent = document.getElementById('activeContent');
+
+        const label = document.createElement("span");
+        label.innerHTML = `${activeLayer.id}`;
+        label.className = "legend";
+        legendItem.appendChild(key);
+        legendItem.appendChild(label);
+        activeContent.appendChild(legendItem);
+        console.log("legend created for " + activeLayer.id);
+    });
+})
+
+map.on('styledata', () => { // create legend - MULTIPLE COLORS
+    // destroy all existing layer entries
+    const legendBox = document.getElementById('activeContent');
+    legendBox.textContent = '';
+
+    // create the legend
+    const activeLayers = map.getStyle().layers.filter((d) => d.layout?.visibility === "visible");
+
+    activeLayers.forEach((activeLayer) => {
+        const fillColorObj = activeLayer['paint']['fill-color'];
+        console.log(fillColorObj);
+        const colorsList = fillColorObj.slice(2).slice(0,-1);
+        console.log(colorsList);
+
+        const legendItem = document.createElement("div");
+
+        colorsList.forEach(() => {
+            hexCode = colorsList.shift();
+            console.log(hexCode);
+            labelValue = colorsList.shift().toLocaleString(undefined, {maximumFractionDigits: 0});
+            console.log(labelValue);
+            console.log(colorsList);
+
+            const legendSubItem = document.createElement("div");
+            const key = document.createElement("span");
+            key.className = "legend-key flex";
+            legendSubItem.className = "ui segment";
+            key.style.backgroundColor = hexCode;
+
+            const activeContent = document.getElementById('activeContent');
+
+            const label = document.createElement("span");
+            label.innerHTML = "< " + labelValue;
+            label.className = "legend";
+            legendSubItem.appendChild(key);
+            legendSubItem.appendChild(label);
+            activeContent.appendChild(legendSubItem);
+
+        });
+    });
 });
 
 // // After the last frame rendered before the map enters an "idle" state.
@@ -105,30 +197,12 @@ map.on('idle', () => {
     // Enumerate ids of the layers.
     const toggleableLayerIDs = ['household_median_income','householdPovertyRate', 'ithacaZoning', 'newHavenZoning', 'newHavenParcels', 'ithacaParcels'];
     
-    // // const results_layers = [].concat(blk_group, wei_group, ce_group);
-    // const results_layers = [].concat(household_median_income, householdPovertyRate);
-
-    // const property_types = {
-    //     'wei_data': 'weighted_interaction_exposure',
-    //     'ce_data': 'cell_exp',
-    //     'bge_data': 'blkgrp_exp',
-    //     'comm_area': 'id',
-    // };
-
-    // const layer_mapping = {
-    //     'household_median_income': household_median_income,
-    //     'householdPovertyRate': householdPovertyRate,
-    //     // 'blk_group': blk_group,
-    //     // 'landuse': land_use,
-    //     // 'gentrification': gentrification
-    // };
-
     // Set up the corresponding toggle button for each layer.
     for (const id of toggleableLayerIDs) {
 
-        // skip layers that arlready have a button
+        // skip layers that already have a button
         if (document.getElementById(id)) {
-            console.log("skipping " + id);
+            // console.log("skipping " + id);
             continue;
         }
 
