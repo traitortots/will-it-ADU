@@ -101,7 +101,7 @@ function legendCreator(activeLayers) {
 // else ... do ...
 }
 
-// Wait until the map has finished loading.
+// Wait until the map has finished loading, then load layers and set visibility, add nav controls
 map.on('load', () => {
     load_layers();
 
@@ -120,7 +120,10 @@ map.on('load', () => {
     map.getCanvas().style.cursor = 'default';
 
     // Add zoom and rotation controls to the map.
-    map.addControl(new mapboxgl.NavigationControl());
+    const nav = new mapboxgl.NavigationControl({
+        visualizePitch: true
+        });
+    map.addControl(nav, 'bottom-left');
     
 });
 
@@ -160,43 +163,79 @@ map.on('styledata', () => { // create legend - MULTIPLE COLORS
 
     // create the legend
     const activeLayers = map.getStyle().layers.filter((d) => d.layout?.visibility === "visible");
-    console.log("activeLayers is", activeLayers);
+    // console.log("activeLayers is", activeLayers);
 
     activeLayers.forEach((activeLayer) => {
         const fillColorObj = activeLayer['paint']['fill-color'];
         const colorsList = fillColorObj.slice(2,-1);
 
         const legendItem = document.createElement("div");
+        
+        // legend creator for step expression
+        if (activeLayers[0].paint["fill-color"][0] === "step") {
 
-        // colorsList.forEach((color) => {
-        for (let i = 0; i < colorsList.length; i = i + 2) {
-            const [hexCode,labelValue] = colorsList.slice(i, i + 2);
-            const legendSubItem = document.createElement("div");
-            const key = document.createElement("span");
-            key.className = "legend-key flex";
-            legendSubItem.className = "ui segment";
-            key.style.backgroundColor = hexCode;
+            for (let i = 0; i < colorsList.length; i = i + 2) {
+                const [hexCode,labelValue] = colorsList.slice(i, i + 2);
+                const legendSubItem = document.createElement("div");
+                const key = document.createElement("span");
+                key.className = "legend-key flex";
+                legendSubItem.className = "ui compact segment";
+                key.style.backgroundColor = hexCode;
 
-            const activeContent = document.getElementById('activeContent');
+                const activeContent = document.getElementById('activeContent');
 
-            const label = document.createElement("span");
-            label.innerHTML = "< " + labelValue.toLocaleString(undefined, {maximumFractionDigits: 0});
-            label.className = "legend";
-            legendSubItem.appendChild(key);
-            legendSubItem.appendChild(label);
-            activeContent.appendChild(legendSubItem);
+                const label = document.createElement("span");
+                label.innerHTML = "< " + labelValue.toLocaleString(undefined, {maximumFractionDigits: 0});
+                label.className = "legend";
+                legendSubItem.appendChild(key);
+                legendSubItem.appendChild(label);
+                activeContent.appendChild(legendSubItem);
+            };
 
-        };
+        // legend creator for match expression    
+        } else if (activeLayers[0].paint["fill-color"][0] === "match") {
+            
+            for (let i = 0; i < colorsList.length; i = i + 2) {
+                const [labelValue, hexCode] = colorsList.slice(i, i + 2);
+                const legendSubItem = document.createElement("div");
+                const key = document.createElement("span");
+                key.className = "legend-key flex";
+                legendSubItem.className = "ui compact segment";
+                key.style.backgroundColor = hexCode;
+
+                const activeContent = document.getElementById('activeContent');
+
+                const label = document.createElement("span");
+                label.innerHTML = "< " + labelValue;
+                label.className = "legend";
+                legendSubItem.appendChild(key);
+                legendSubItem.appendChild(label);
+                activeContent.appendChild(legendSubItem);
+            };
+        }
+        else {
+            console.log("unable to create legend item for " + activeLayer.id + " because it is not a step or match style expression");
+        }
     });
 });
 
-// // After the last frame rendered before the map enters an "idle" state.
+// // After the last frame rendered before the map enters an "idle" state, add layer controls
 map.on('idle', () => {
     // Enumerate ids of the layers.
-    const toggleableLayerIDs = ['household_median_income','householdPovertyRate', 'ithacaZoning', 'newHavenZoning', 'newHavenParcels', 'ithacaParcels', 'ithacaHousing', 'newHavenHousing', 'newHavenAttached'];
+    const toggleableLayerIDs = {
+        'household_median_income': 'Household Median Income',
+        'householdPovertyRate': 'Household Poverty Rate', 
+        'ithacaZoning': 'Ithaca Zoning', 
+        'newHavenZoning': 'New Haven Zoning', 
+        'newHavenParcels': 'New Haven Parcels', 
+        'ithacaParcels': 'Ithaca Parcels', 
+        'ithacaHousing': 'Ithaca Housing', 
+        'newHavenHousing': 'New Haven Housing', 
+        'newHavenAttached': 'New Haven Attached',
+    };
     
     // Set up the corresponding toggle button for each layer.
-    for (const id of toggleableLayerIDs) {
+    for (const id of Object.keys(toggleableLayerIDs)) {
 
         // skip layers that already have a button
         if (document.getElementById(id)) {
@@ -208,12 +247,12 @@ map.on('idle', () => {
         const link = document.createElement('a');
         link.id = id;
         link.href = '#';
-        link.textContent = id;
+        link.textContent = toggleableLayerIDs[id];
         link.className += ' item';
 
         // Show or hide layer when the toggle is clicked.
         link.onclick = function (e) {
-            const clickedLayer = this.textContent;
+            const clickedLayer = this.id;
             e.preventDefault();
             e.stopPropagation();
 
@@ -239,117 +278,3 @@ map.on('idle', () => {
     });
 
 
-
-    // // If these layers were not added to the map, abort
-    // if (!layers_exist(blk_group) || !layers_exist(wei_group) || !layers_exist(ce_group)) {
-    //     console.log("aborting");
-    //     return;
-    // }
-
-
-    // $(document).ready(function(){
-    //     $('.ui.accordion').accordion()
-
-    //     $('.toggle').click(function(){
-    //         $('.ui.accordion').accordion('toggle', 0);
-    //     });
-
-    //     $('input[type="radio"]').click(function(){
-    //         if($(this).is(":checked")){
-    //             let name = this.getAttribute("id");
-    //             console.log("attribute ID is " + name)
-    //             let group = layer_mapping[name];
-    //             console.log("layer returned is " + group)
-    //             console.log("assigning in radio buttons")
-    //             active_layer = name;
-    //             make_visible(group, results_layers);
-    //             adjust_active_layer(this, property_types);
-    //         }
-    //     });
-
-    //     $('input[type="checkbox"]').click(function(){
-    //         let name = this.getAttribute("id");
-    //         let group = layer_mapping[name];
-    //         let none = []
-
-    //         if($(this).is(":checked")){
-    //             if(name == "commdist") {
-    //                 map.setLayoutProperty(
-    //                     'comm_area',
-    //                     'visibility',
-    //                     'visible'
-    //                 );
-    //             } else {
-    //                 make_visible(group, none);
-    //             }
-    //         } else if($(this).is(":not(:checked)")){
-    //             if(name == "commdist") {
-    //                 map.setLayoutProperty(
-    //                     'comm_area',
-    //                     'visibility',
-    //                     'none'
-    //                 );
-    //             } else {
-    //                 make_invisible(group);
-    //             }
-    //         }
-    //     });
-    // });
-
-    // map.on('mousemove', (event) => {
-    //     if (active_layer == 'blk_group') {
-    //         active_layer = 'bge_data'
-    //     } else if (active_layer == 'wei_group') {
-    //         active_layer = 'wei_data'
-    //     } else if (active_layer == 'ce_group') {
-    //         active_layer = 'ce_data'
-    //     }
-
-    //     const boundaries = map.queryRenderedFeatures(event.point, {
-    //     layers: layer_mapping[active_layer]
-    //     });
-
-    //     console.log("active layer " + active_layer);
-    //     value = boundaries[0].properties[property_types[active_layer]]
-
-    //     if (value == undefined) {
-    //         value = "No Data"
-    //     } else {
-    //         value = Math.floor(value * 100);
-    //         value = String(value).concat("%");
-    //     }
-
-    //     if (active_layer == 'bge_data') {
-
-    //         if (value == "No Data") {
-    //             document.getElementById('hover').innerHTML = boundaries.length
-    //             ? `<p>No Data</p>`
-    //             : `<p>Hover over an area!</p>`;
-    //         } else {
-    //             document.getElementById('hover').innerHTML = boundaries.length
-    //             ? `<p>There's a <strong><em>${value}</strong></em> chance that two people living in this tract are different races</p>`
-    //             : `<p>Hover over an area!</p>`;
-    //         }
-    //     } else if (active_layer == 'wei_data') {
-
-    //         if (value == "No Data") {
-    //             document.getElementById('hover').innerHTML = boundaries.length
-    //             ? `<p>No Data</p>`
-    //             : `<p>Hover over an area!</p>`;
-    //         } else {
-    //             document.getElementById('hover').innerHTML = boundaries.length
-    //             ? `<p>There's a <strong><em>${value}</strong></em> chance that two people who have potentially interacted in this tract are different races</em></p>`
-    //             : `<p>Hover over an area!</p>`;
-    //         }
-    //     } else if (active_layer == 'ce_data') {
-
-    //         if (value == "No Data") {
-    //             document.getElementById('hover').innerHTML = boundaries.length
-    //             ? `<p>No Data</p>`
-    //             : `<p>Hover over an area!</p>`;
-    //         } else {
-    //             document.getElementById('hover').innerHTML = boundaries.length
-    //             ? `<p>There's a <strong><em>${value}</strong></em> chance that two people who have visited this tract are different races</p>`
-    //             : `<p>Hover over an area!</p>`;
-    //         }
-    //     }

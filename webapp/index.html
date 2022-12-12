@@ -64,9 +64,9 @@
           </div>
 
         <!-- Welcome Modal Script -->
-        <script>$('.ui.modal')
+        <!-- <script>$('.ui.modal')
             .modal('show')
-          ;</script>
+          ;</script> -->
 
         <!-- Map -->
         <div class="container" id="mapcontainer">
@@ -79,6 +79,7 @@
             <div class="row"></div>
             <div class="spacer"></div>
 
+            <!-- Story Box -->
             <div class="four wide column">
               <div class="ui stacked segment" id="story_pane">
                     <div class="ui large header" id="story-header">Welcome!</div>
@@ -94,20 +95,14 @@
                 </div>
             </div>
 
+            <!-- Info Box -->
             <div class="four wide column" id="info">
-                <div class="ui segment">
+                <div class="ui long scrolling segment">
                     <div class="ui large header">Layers</div>
-
-                    <!-- Information Box -->
-                    <div class="info_box ui vertical menu fluid" id="layersList">
-                    </div> 
+                    <div class="ui vertical menu fluid scrolling" id="layersList"></div> 
                     <div class="ui large header">Legend</div>
-                    <div class="legend_box">
-                        <div class=" ui fitted segment">
-                            
-                            <div class="ui segments" id="activeContent">
-                           </div>
-                        </div>
+                        <div class="legend_box ui scrolling fitted segment">
+                            <div class="ui segments" id="activeContent"></div>
                     </div>
 
                     <!-- <div class="ui segment">

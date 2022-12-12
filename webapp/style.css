@@ -5,6 +5,10 @@
 /* Map Styling */
 body { margin: 0; padding: 0; }
 
+/* * {
+    outline: solid 1px red;
+} */
+
 #map { position: absolute; top: 40px; bottom: 0; width: 100%; }
 
 /* Style for Toggle Menu */
@@ -135,11 +139,13 @@ margin-right: 5px;
 #info {
     /* position: absolute; */
     opacity: 1;
-    top: 10%;
+    top: 5%;
     left: 45%;
     /* top: 60px; */
     /* right: 30px; */
     height: 90%; 
+    /* outline: solid 1px red; */
+    
 }
 
 #spacer {

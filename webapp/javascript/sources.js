@@ -186,9 +186,10 @@ function load_layers() {
             'fill-color': [
                 'match',
                 ['get', 'Type of Zoning District'],
-                'Mixed with Residential', 'DarkSeaGreen',
+                'Mixed with Residential','DarkSeaGreen', 
                 "Nonresidential", 'crimson',
-                'Primarily Residential', 'aqua', 'white'
+                'Primarily Residential','aqua', 
+                'white'
             ],
             'fill-opacity': 0.5,
         },
