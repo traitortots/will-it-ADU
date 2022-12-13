@@ -38,7 +38,7 @@ var stories = [
       },
     },
     { title: "Where is housing allowed in Ithaca?",
-      description: "The city of Ithaca is comprised of three types of zoning districts:  ‘Primarily Residential’, ‘Non-Residential’ and ‘Mixed with Residential’. If we take into account the fact that’ non-residential’ zoning districts do not allow ADU’s, our total number of possible ADU’s decreases to 4594.    ",
+      description: "The Ithaca’s Zoning Ordinance designates which parcels allow ADU’s. Each parcel in the city is designated one of the following categories: ‘Overlay’, ‘Prohibited’ or ‘Public Hearing’. ‘Overlay’ and ‘Public Hearing’ both allow for the construction of ADU’s, whilst ‘Prohibited’ do not.Taking account of this, the total number of ADU’s is reduced even further to 4541 which is 5% decrease of the total number of ADU’s we had at the start . It is also important to note that the Ithaca zoning ordinance also has certain requirements for parcels that are allowed ADU’s. These requirements are as follows: Owner Occupancy is required of the residential unit the ADU is built next to. All ADU units must have a minimum of 1 parking space additional to the main unit. ADU’s can only be no more than 33.3% of the size of the main unit.",
       layer: "ithacaHousing",
       flyTo: {
         center: [-76.49502, 42.44116],
@@ -68,7 +68,7 @@ var stories = [
     // },
     // },
     { title: "Downtown Ithaca",
-    description: "This map shows the median household income in census tract 1 - Downtown Ithaca. In this census tract, the median household income is 36309. This figure is lower than the national average, indicating this is a lower income neighborhood. If a resident rents out a single ADU in their lot , they will be expected to make an extra $9600 every year. This will mean a substantial increase of 26% to their household income which could help them improve their quality of life.",
+    description: "In order to demonstrate how the addition of ADU’s will benefit working class Americans, we have decided to zoom in onto the census tract of Downtown Ithaca.  This census tract was selected as its median household income is $36,309 which is far lower than Ithaca’s average of $76,209 indicating this census tract is a low-income neighborhood. If a resident rents out a single ADU in their lot, they will be expected to make an extra $9,600 every year. This will mean a substantial increase of 26% to their household income which could help them improve their quality of life in a city with a high cost of living.",
     layer: "household_median_income",
     flyTo: {
       center: [-76.49471, 42.43949],
@@ -78,7 +78,7 @@ var stories = [
     },
     },
     { title: "Neighborhood Context (New Haven)",
-    description: "New Haven, on the other hand, is a far larger city that is also home to a large student population due to Yale University. It has some of the highest populations of Black, Indigenous, and Hispanic people in the entire state. These communities are often at the brunt of the expensive housing market and high costs of living. There is also a large disparity between the supply of housing to their demand. The increase in monthly rent for multifamily buildings is far greater than the growth in the production of these units. New Haven population - 135, 081 (2011) ",
+    description: "New Haven, on the other hand, is a far larger city that is also home to a large student population due to Yale University. It has some of the highest populations of Black, Indigenous, and Hispanic people in the entire state. These communities are often at the brunt of the expensive housing market and high costs of living. There is also a large disparity between the supply of housing to their demand. The increase in monthly rent for multifamily buildings is far greater than the growth in the production of these units. New Haven population - 135,081 (2011) ",
     layer: "household_median_income",
     flyTo: {
       center: [-72.92723, 41.32440],
@@ -118,7 +118,7 @@ var stories = [
     },
     },
     { title: "ADU Feasibility when factoring in primary structure regulation",
-    description: "New Haven’s Zoning Ordinance contains special regulations for the Special Single Family and General Single Family zoning districts. In these districts, all ADU units must be connected to the primary structure. This means they cannot be constructed separately from the main unit. This results in a reduction of 8871 ADU’s in New Haven, meaning only 54% of all possible ADU’s can be constructed when we consider local regulations. ",
+    description: "New Haven’s Zoning Ordinance contains special regulations for the Special Single Family and General Single Family zoning districts. In these districts, all ADU units must be connected to the primary structure. This means they cannot be constructed separately from the main unit. This results in a reduction of 8,871 ADU’s in New Haven, meaning only 54% of all possible ADU’s can be constructed when we consider local regulations. ",
     layer: "newHavenAttached",
     flyTo: {
       center: [-72.92767, 41.30805],
@@ -128,7 +128,7 @@ var stories = [
     },
     },
     { title: "Median Income in Census Tract 1415",
-    description: "This map shows the median household income across census tract 1415 in New Haven. In this census tract, the median household income is 29,066 .This figure is lower than the national average, indicating this is a lower income neighborhood. If a resident rents out a single ADU in their lot , they will be expected to make an extra $9600 every year. This will mean a substantial increase of 33% to their household income which could help them improve their quality of life.",
+    description: "This map shows the median household income across census tract 1415 in New Haven. In this census tract, the median household income is $29,066 .This figure is lower than the national average, indicating this is a lower income neighborhood. If a resident rents out a single ADU in their lot , they will be expected to make an extra $9,600 every year. This will mean a substantial increase of 33% to their household income which could help them improve their quality of life.",
     layer: "household_median_income",
     flyTo: {
       center: [-72.93343, 41.31257],
