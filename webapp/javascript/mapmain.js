@@ -82,25 +82,6 @@ function make_invisible(storyLayer) {
     }
 }
 
-// legend creator options
-function singleColorLegend(activeLayer) {
-
-}
-
-function stepColorLegend(activeLayer) {
-
-}
-
-function matchColorLegend(activeLayer) {
-
-}
-
-function legendCreator(activeLayers) {
-// if regex ... do ...
-// elif regex ... do...
-// else ... do ...
-}
-
 // Wait until the map has finished loading, then load layers and set visibility, add nav controls
 map.on('load', () => {
     load_layers();
