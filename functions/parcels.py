@@ -1,6 +1,6 @@
 from shapely.geometry import Polygon, LineString, MultiLineString, Point, MultiPoint, MultiPolygon
 from shapely.strtree import STRtree
-from typing import List, Sequence, Any
+from typing import List, Sequence, Any, Tuple, Union
 
 class Parcel(Polygon):
     def __init__(self, polygons, parcel_id, owner_name=None, address=None, zoning=None, **kwargs):
@@ -12,8 +12,11 @@ class Parcel(Polygon):
 
         # Extract edges from the exterior ring and store them as LineString objects
         self.edge_attributes = {}
-        coords = list(self.exterior.coords)
-        self.edges = [LineString([coords[i], coords[i+1]]) for i in range(len(coords) - 1)]
+        if self.is_valid and self.exterior is not None:
+            coords = list(self.exterior.coords)
+            self.edges = [LineString([coords[i], coords[i+1]]) for i in range(len(coords) - 1)]
+        else:
+            raise ValueError("Invalid polygon.")
 
         # Initialize attributes for each edge using WKT as the key
         for edge in self.edges:
