@@ -90,6 +90,11 @@ class Parcel(Polygon):
         mbr = self.minimum_rotated_rectangle
         mbr_coords = list(mbr.exterior.coords)
         self.mbr_edges = [LineString(mbr_coords[i:i+2]) for i in range(2)]  # only first two edges
+
+        # Set the "side_name" attribute for each edge
+        for i in range(2):
+            self.set_edge_attribute(i, "side_name", f"side_{i+1}", mbr=True)
+        
         self.calculate_and_set_mbr_bearings()
 
     def calculate_and_set_mbr_bearings(self):
@@ -98,7 +103,7 @@ class Parcel(Polygon):
         """
         for i, edge in enumerate(self.mbr_edges):
             bearing = self.calculate_rhumb_bearing(edge.coords[0], edge.coords[1])
-            self.set_edge_attribute(i, f'mbr_side{i+1}', bearing, mbr=True)
+            self.set_edge_attribute(i, "bearing", bearing, mbr=True)
 
     def calculate_rhumb_bearing(self, pt1: Tuple[float, float], pt2: Tuple[float, float]) -> float:
         """
