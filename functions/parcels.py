@@ -13,7 +13,9 @@ class Parcel(Polygon):
         self.zoning = zoning
         self.source_crs = source_crs
         self.edge_attributes = {}
+        self.mbr_edge_attributes = {}
         self.initialize_edges()
+        self.initialize_mbr()
 
     def initialize_edges(self):
         # Extract edges from the exterior ring and store them as LineString objects
@@ -29,6 +31,18 @@ class Parcel(Polygon):
             bearing = self.calculate_rhumb_bearing(edge.coords[0], edge.coords[1])
             self.set_edge_attribute(i, 'bearing', bearing)
 
+    def initialize_mbr(self):
+        # Calculate the minimum bounding rectangle of the parcel
+        mbr = self.minimum_rotated_rectangle
+        mbr_coords = list(mbr.exterior.coords)
+        self.mbr_edges = [LineString(mbr_coords[i:i+2]) for i in range(2)]  # only first two edges
+        self.calculate_and_set_mbr_bearings()
+
+    def calculate_and_set_mbr_bearings(self):
+        for i, edge in enumerate(self.mbr_edges):
+            bearing = self.calculate_rhumb_bearing(edge.coords[0], edge.coords[1])
+            self.set_edge_attribute(i, f'mbr_side{i+1}', bearing, mbr=True)
+
     def calculate_rhumb_bearing(self, pt1: Tuple[float, float], pt2: Tuple[float, float]) -> float:
         geod = Geod(ellps="WGS84")
         transformer = Transformer.from_crs(self.source_crs, "EPSG:4326")
@@ -38,31 +52,43 @@ class Parcel(Polygon):
         bearing = (angle + 180) % 360 - 180
         return bearing
 
-    def set_edge_attribute(self, edge_index, attribute, value):
-        """Set an attribute to a specific edge."""
-        if edge_index < len(self.edges):
-            edge_wkt = self.edges[edge_index].wkt
-            if edge_wkt not in self.edge_attributes:
-                self.edge_attributes[edge_wkt] = {}
-            self.edge_attributes[edge_wkt][attribute] = value
+    def set_edge_attribute(self, edge_index, attribute, value, mbr=False):
+        target_dict = self.mbr_edge_attributes if mbr else self.edge_attributes
+        target_edges = self.mbr_edges if mbr else self.edges
+        if edge_index < len(target_edges):
+            edge_wkt = target_edges[edge_index].wkt
+            if edge_wkt not in target_dict:
+                target_dict[edge_wkt] = {}
+            target_dict[edge_wkt][attribute] = value
         else:
             raise IndexError("Edge index out of range.")
     
-    def get_edge_attribute(self, edge_index, attribute):
-        """Retrieve an attribute from a specific edge."""
-        if edge_index < len(self.edges):
-            return self.edge_attributes[self.edges[edge_index].wkt].get(attribute, None)
+    def get_edge_attribute(self, edge_index, attribute, mbr=False):
+        target_dict = self.mbr_edge_attributes if mbr else self.edge_attributes
+        target_edges = self.mbr_edges if mbr else self.edges
+        if edge_index < len(target_edges):
+            return target_dict[target_edges[edge_index].wkt].get(attribute, None)
         else:
             raise IndexError("Edge index out of range.")
         
-    def get_all_edges_with_attributes(self):
-        """Return a list of dictionaries with edges and their attributes."""
+    def get_all_parcel_edges(self):
         edges_info = []
         for edge in self.edges:
             edge_info = {
                 'wkt': edge.wkt,
                 'coordinates': list(edge.coords),
                 'attributes': self.edge_attributes[edge.wkt]
+            }
+            edges_info.append(edge_info)
+        return edges_info
+
+    def get_all_mbr_edges(self):
+        edges_info = []
+        for edge in self.mbr_edges:
+            edge_info = {
+                'wkt': edge.wkt,
+                'coordinates': list(edge.coords),
+                'attributes': self.mbr_edge_attributes[edge.wkt]
             }
             edges_info.append(edge_info)
         return edges_info
