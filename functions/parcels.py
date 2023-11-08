@@ -83,19 +83,25 @@ class Parcel(Polygon):
 
     def initialize_mbr(self):
         """
-        Calculates the minimum bounding rectangle (MBR) of the parcel and initializes the first
-        two edges along with their attributes.
+        Calculates the minimum bounding rectangle (MBR) of the parcel and initializes the edges 
+        along with their attributes.
         """
-        # Calculate the minimum bounding rectangle of the parcel
+         # Calculate the minimum bounding rectangle of the parcel
         mbr = self.minimum_rotated_rectangle
-        mbr_coords = list(mbr.exterior.coords)
-        self.mbr_edges = [LineString(mbr_coords[i:i+2]) for i in range(2)]  # only first two edges
 
-        # Set the "side_name" attribute for each edge
-        for i in range(2):
-            self.set_edge_attribute(i, "side_name", f"side_{i+1}", mbr=True)
-        
-        self.calculate_and_set_mbr_bearings()
+        # Ensure the MBR is valid and has an exterior
+        if mbr.is_valid and mbr.exterior is not None:
+            mbr_coords = list(mbr.exterior.coords)
+            # Create LineString objects for each edge of the MBR, excluding the closing point which is the same as the first
+            self.mbr_edges = [LineString([mbr_coords[i], mbr_coords[i+1]]) for i in range(len(mbr_coords) - 1)]
+
+            # Set the "side_name" attribute for each edge
+            for i, edge in enumerate(self.mbr_edges):
+                self.set_edge_attribute(i, "side_name", f"side_{i+1}", mbr=True)
+
+            self.calculate_and_set_mbr_bearings()
+        else:
+            raise ValueError("Invalid minimum bounding rectangle.")
 
     def calculate_and_set_mbr_bearings(self):
         """
