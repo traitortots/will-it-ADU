@@ -218,14 +218,33 @@ class Parcel(Polygon):
         desc += f"  - Zoning: {self.zoning if self.zoning else 'Unknown'}"
         print(desc)
 
-    def nearest_road_segments(self, tree: STRtree, road_dicts: List[dict], n: int = 5) -> Sequence[Any]:
-        # Get the centroid of the parcel's geometry
-        centroid = self.centroid
+    def nearest_road_segments(self, roads_gdf, n=5):
+        """
+        Find the n nearest road segments to the parcel.
 
-        # Use STRtree to find the nearest road segments to the centroid
-        nearest_geoms = tree.query(centroid)[:n]
+        Parameters:
+        - roads_gdf (GeoDataFrame): A GeoDataFrame containing road geometries.
+        - n (int): The number of nearest road segments to return.
+
+        Returns:
+        - GeoDataFrame: A GeoDataFrame containing the n nearest road segments.
+        """
+        # Get the centroid of the parcel
+        centroid = self.centroid
         
-        # Find the dictionaries corresponding to the nearest geometries
-        nearest_segments = [road for road in road_dicts if road['geometry'] in nearest_geoms]
+        # Create a buffer around the centroid to consider for potential nearby roads (1000 meters here)
+        buffered_centroid = centroid.buffer(1000)
+        
+        # Filter the roads within the buffer
+        nearby_roads = roads_gdf[roads_gdf.intersects(buffered_centroid)]
+        
+        # Calculate the distance from the centroid to these road segments
+        nearby_roads['distance'] = nearby_roads.geometry.apply(lambda geom: centroid.distance(geom)).astype(float)
+        
+        # Sort the road segments by distance and take the top n closest
+        nearest_segments = nearby_roads.nsmallest(n, 'distance').copy()
+        
+        # Reset the index for the resulting GeoDataFrame
+        nearest_segments.reset_index(drop=True, inplace=True)
         
         return nearest_segments
