@@ -3,6 +3,7 @@ from shapely.strtree import STRtree
 from typing import List, Sequence, Any, Tuple, Union
 import pyproj
 from pyproj import Geod, Transformer
+from thefuzz import fuzz
 
 class Parcel(Polygon):
     """
@@ -59,6 +60,7 @@ class Parcel(Polygon):
         self.mbr_edge_attributes = {}
         self.initialize_edges()
         self.initialize_mbr()
+        self.front_road_segment = None  
 
     def initialize_edges(self):
         """
@@ -252,3 +254,18 @@ class Parcel(Polygon):
         nearest_segments.reset_index(drop=True, inplace=True)
         
         return nearest_segments
+
+    def find_front_road_segment(self, roads_gdf):
+        nearest_segments = self.nearest_road_segments(roads_gdf, n=5)
+        best_score = 0
+        best_segment = None
+
+        for _, road_segment in nearest_segments.iterrows():
+            road_name = road_segment['FullStreet']  # Assume road name is in 'FullStreet' column
+            score = fuzz.ratio(self.street_name.lower(), road_name.lower())
+            if score > best_score:
+                best_score = score
+                best_segment = road_segment
+
+        self.front_road_segment = best_segment
+        return self.front_road_segment  # Return the selected road segment
