@@ -13,6 +13,7 @@ class Parcel(Polygon):
         parcel_id (str): A unique identifier for the parcel.
         owner_name (str, optional): The name of the owner of the parcel.
         address (str, optional): The address of the parcel.
+        street_name (str, optional): The name of the street the parcel is addressed to (IMPORTANT for determining front facing edges)
         zoning (str, optional): The zoning classification of the parcel.
         source_crs (str): The coordinate reference system of the parcel's points.
         edge_attributes (dict): A dictionary to hold attributes of the parcel's edges.
@@ -31,7 +32,7 @@ class Parcel(Polygon):
         get_all_parcel_edges: Retrieves all edges of the parcel with their attributes.
         get_all_mbr_edges: Retrieves all edges of the MBR with their attributes.
     """
-    def __init__(self, polygons, parcel_id, owner_name=None, address=None, zoning=None, source_crs="EPSG:4326", **kwargs):
+    def __init__(self, polygons, parcel_id, owner_name=None, address=None, street_name=None, zoning=None, source_crs="EPSG:4326", **kwargs):
         """
         Initialize a new Parcel object with a unique ID and optional attributes.
 
@@ -40,6 +41,7 @@ class Parcel(Polygon):
             parcel_id (str): A unique identifier for the parcel.
             owner_name (str, optional): The name of the owner of the parcel. Defaults to None.
             address (str, optional): The address of the parcel. Defaults to None.
+            street_name (str, optional): The name of the street the parcel is addressed to (IMPORTANT for determining front facing edges). Defaults to None.
             zoning (str, optional): The zoning classification of the parcel. Defaults to None.
             source_crs (str): The coordinate reference system of the parcel's points. Defaults to "EPSG:4326".
 
@@ -50,6 +52,7 @@ class Parcel(Polygon):
         self.parcel_id = parcel_id
         self.owner_name = owner_name
         self.address = address
+        self.street_name = street_name
         self.zoning = zoning
         self.source_crs = source_crs
         self.edge_attributes = {}
@@ -215,6 +218,7 @@ class Parcel(Polygon):
         desc += f"  - Owner: {self.owner_name if self.owner_name else 'Unknown'}\n"
         desc += f"  - Parcel ID: {self.parcel_id}\n"
         desc += f"  - Address: {self.address if self.address else 'Unknown'}\n"
+        desc += f"  - Street Name: {self.street_name if self.street_name else 'Unknown'}\n"
         desc += f"  - Zoning: {self.zoning if self.zoning else 'Unknown'}"
         print(desc)
 
