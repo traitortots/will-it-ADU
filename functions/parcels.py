@@ -1,9 +1,10 @@
-from shapely.geometry import Polygon, LineString, MultiLineString, Point, MultiPoint, MultiPolygon
+from shapely.geometry import Polygon, LineString
 from shapely.strtree import STRtree
 from typing import List, Sequence, Any, Tuple, Union
 import pyproj
 from pyproj import Geod, Transformer
 from thefuzz import fuzz
+from geopandas import GeoDataFrame
 
 class Parcel(Polygon):
     """
@@ -32,6 +33,11 @@ class Parcel(Polygon):
         get_edge_attribute: Gets an attribute for a specified edge.
         get_all_parcel_edges: Retrieves all edges of the parcel with their attributes.
         get_all_mbr_edges: Retrieves all edges of the MBR with their attributes.
+        description: Prints a description of the parcel.
+        nearest_road_segments: Finds the n nearest road segments to the parcel.
+        find_front_road_segment: Finds the road segment that the parcel is addressed to.
+        get_neighboring_parcels: Finds the neighboring parcels of the parcel.
+
     """
     def __init__(self, polygons, parcel_id, owner_name=None, address=None, street_name=None, zoning=None, source_crs=None, **kwargs):
         """
@@ -44,7 +50,7 @@ class Parcel(Polygon):
             address (str, optional): The address of the parcel. Defaults to None.
             street_name (str, optional): The name of the street the parcel is addressed to (IMPORTANT for determining front facing edges). Defaults to None.
             zoning (str, optional): The zoning classification of the parcel. Defaults to None.
-            source_crs (str): The coordinate reference system of the parcel's points. Defaults to "EPSG:4326".
+            source_crs (str): The coordinate reference system of the parcel's points. Defaults to None. 
 
         Raises:
             ValueError: If the provided polygon is not valid.
@@ -273,3 +279,27 @@ class Parcel(Polygon):
 
         self.front_road_segment = best_segment
         return self.front_road_segment  # Return the selected road segment
+
+    def get_neighboring_parcels(self, parcels_gdf: GeoDataFrame, buffer_distance: float = 1.0) -> GeoDataFrame:
+        # Buffer the Parcel's geometry by the specified distance
+        buff_geom = self.buffer(buffer_distance)
+        print(f"Buffered geometry area: {buff_geom.area}")
+
+        # Filter out the Parcel itself and other parcels that do not intersect with the buffered area
+        neighbors = parcels_gdf[parcels_gdf.intersects(buff_geom)]
+        print(f"Number of intersecting parcels (including self): {len(neighbors)}")
+        
+        # Further filter to exclude self parcel
+        neighboring_parcels = neighbors[neighbors['FID'] != self.parcel_id]
+        print(f"Number of neighboring parcels (excluding self): {len(neighboring_parcels)}")
+
+        # If the Parcel is a polygon, filter out parcels that contain its representative point
+        if isinstance(self, Polygon):
+            rep_point = self.representative_point()
+            neighboring_parcels = neighboring_parcels[~neighboring_parcels.geometry.contains(rep_point)]
+            print(f"Number of neighboring parcels after excluding those containing the rep point: {len(neighboring_parcels)}")
+
+        # Store the resulting GeoDataFrame in the Parcel instance
+        self.neighboring_parcels = GeoDataFrame(neighboring_parcels, crs=parcels_gdf.crs)
+
+        return self.neighboring_parcels
