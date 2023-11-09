@@ -33,7 +33,7 @@ class Parcel(Polygon):
         get_all_parcel_edges: Retrieves all edges of the parcel with their attributes.
         get_all_mbr_edges: Retrieves all edges of the MBR with their attributes.
     """
-    def __init__(self, polygons, parcel_id, owner_name=None, address=None, street_name=None, zoning=None, source_crs="EPSG:4326", **kwargs):
+    def __init__(self, polygons, parcel_id, owner_name=None, address=None, street_name=None, zoning=None, source_crs=None, **kwargs):
         """
         Initialize a new Parcel object with a unique ID and optional attributes.
 
@@ -48,7 +48,11 @@ class Parcel(Polygon):
 
         Raises:
             ValueError: If the provided polygon is not valid.
+            ValueError: If source_crs is not provided.
         """
+        if source_crs is None:
+            raise ValueError("The source_crs parameter is required and was not provided.")
+
         super().__init__(polygons, **kwargs)
         self.parcel_id = parcel_id
         self.owner_name = owner_name
